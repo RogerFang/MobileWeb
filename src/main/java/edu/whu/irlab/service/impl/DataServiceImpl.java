@@ -19,7 +19,6 @@ public class DataServiceImpl implements DataService {
     @Autowired
     private ConfigProps configProps;
 
-
     @Override
     public List<String> getData2Train() {
         return getData(configProps.getProp("DATA_TO_TRAIN_DIR"));
@@ -49,6 +48,7 @@ public class DataServiceImpl implements DataService {
                 if (files.length > 0) {
                     List<String> dataFiles = new ArrayList<>();
                     for (File file: dir.listFiles()){
+                        System.out.println(file.getName());
                         dataFiles.add(file.getName());
                     }
                     Collections.sort(dataFiles);

@@ -30,6 +30,8 @@ public class SystemController {
     public String system(Model model){
         List<String> data2TrainPath = dataService.getData2Train();
         String data2PredictPath = dataService.getData2Predict();
+        System.out.println(data2TrainPath);
+
         // String predictMonth = dataService.getPredictMonth();
         // List<TrainRecord> trainRecords = trainRecordService.selectAll();
         // List<TrainRecord> trainRecordsFinished = trainRecordService.selectByState(0);

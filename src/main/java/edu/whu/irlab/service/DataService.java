@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface DataService {
 
-    public List<String> getData2Train();
+    List<String> getData2Train();
 
-    public String getData2Predict();
+    String getData2Predict();
 }

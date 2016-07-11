@@ -7,5 +7,5 @@ import edu.whu.irlab.entity.User;
  */
 public interface UserService {
 
-    public User findByUsername(String username);
+    User findByUsername(String username);
 }
