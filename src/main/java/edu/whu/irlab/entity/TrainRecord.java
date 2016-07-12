@@ -1,7 +1,13 @@
 package edu.whu.irlab.entity;
 
+import com.google.common.base.Splitter;
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import javax.persistence.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Roger on 2016/7/9.
@@ -81,5 +87,19 @@ public class TrainRecord {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Transient
+    public List<String> getTrainMonthDataName() {
+        List<String> filenameList = new ArrayList<>();
+        for (String filepath: Splitter.on(",").trimResults().splitToList(getTrainMonthData())){
+            filenameList.add(new File(filepath).getName());
+        }
+        return filenameList;
+    }
+
+    @Transient
+    public String getFormatUpdateTime(){
+        return DateFormatUtils.format(updateTime, "yyyy-MM-dd HH:mm:ss");
     }
 }

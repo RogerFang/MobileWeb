@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Roger on 2016/5/18.
@@ -28,17 +29,17 @@ public class SystemController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String system(Model model){
-        List<String> data2TrainPath = dataService.getData2Train();
-        String data2PredictPath = dataService.getData2Predict();
-        System.out.println(data2TrainPath);
+        // Map<String, String> data2TrainPath = dataService.getData2Train();
+        // String data2PredictPath = dataService.getData2Predict();
+        // System.out.println(data2TrainPath);
 
         // String predictMonth = dataService.getPredictMonth();
         // List<TrainRecord> trainRecords = trainRecordService.selectAll();
         // List<TrainRecord> trainRecordsFinished = trainRecordService.selectByState(0);
         // SystemProps systemProps = systemPropsService.getSystemProps();
 
-        model.addAttribute("data2TrainPath", data2TrainPath);
-        model.addAttribute("data2PredictPath", data2PredictPath);
+        // model.addAttribute("data2TrainPath", data2TrainPath);
+        // model.addAttribute("data2PredictPath", data2PredictPath);
         // model.addAttribute("predictMonth", predictMonth);
         // model.addAttribute("trainRecords", trainRecords);
         // model.addAttribute("trainRecordsFinished", trainRecordsFinished);

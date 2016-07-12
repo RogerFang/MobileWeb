@@ -33,8 +33,10 @@
 <body>
     <div class="container" style="width: 80%">
         <ul class="nav nav-tabs">
+            <li id="trainNav"><a href="${ctx}/train">训练</a></li>
+            <li id="predictNav"><a href="${ctx}/predict">预测</a></li>
+            <li id="systemNav"><a href="${ctx}/system">系统参数</a></li>
             <li id="displayNav"><a href="${ctx}/display">效果展示</a></li>
-            <li id="systemNav"><a href="${ctx}/system">设置</a></li>
             <shiro:user><li class="pull-right"><a href="${ctx}/logout">退出</a></li></shiro:user>
         </ul>
 

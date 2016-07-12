@@ -20,38 +20,35 @@ public class DataServiceImpl implements DataService {
     private ConfigProps configProps;
 
     @Override
-    public List<String> getData2Train() {
+    public Map<String, String> getData2Train() {
         return getData(configProps.getProp("DATA_TO_TRAIN_DIR"));
     }
 
     @Override
-    public String getData2Predict() {
-        Calendar calendar = Calendar.getInstance();
-        Date nowDate = calendar.getTime();
-        DateFormat format = new SimpleDateFormat("yyyyMM");
-        String nowMonthFileName = format.format(nowDate)+".txt";
-
-        List<String> data2PredictPath = getData(configProps.getProp("DATA_TO_PREDICT_DIR"));
-        if (data2PredictPath!=null){
-            if (data2PredictPath.contains(nowMonthFileName)) {
-                return nowMonthFileName;
-            }
-        }
-        return null;
+    public Map<String, String> getData2Predict() {
+        return getData(configProps.getProp("DATA_TO_PREDICT_DIR"));
     }
 
-    private List<String> getData(String dirPath){
+    @Override
+    public Map<String, String> getData() {
+        return getData(configProps.getProp("DATA_RAW_DIR"));
+    }
+
+    /**
+     * @param dirPath 存放文件的目录
+     * @return key=文件名, value=文件绝对路径
+     */
+    private Map<String, String> getData(String dirPath){
         File dir = new File(dirPath);
         if (dir.exists()){
             if (dir.isDirectory()){
                 File[] files = dir.listFiles();
                 if (files.length > 0) {
-                    List<String> dataFiles = new ArrayList<>();
+                    Map<String, String> dataFiles = new TreeMap<>();
                     for (File file: dir.listFiles()){
-                        System.out.println(file.getName());
-                        dataFiles.add(file.getName());
+                        // System.out.println(file.getName());
+                        dataFiles.put(file.getName(), file.getAbsolutePath());
                     }
-                    Collections.sort(dataFiles);
                     return dataFiles;
                 }
             }
