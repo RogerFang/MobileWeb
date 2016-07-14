@@ -19,7 +19,7 @@ public class DataServiceImpl implements DataService {
     @Autowired
     private ConfigProps configProps;
 
-    @Override
+    /*@Override
     public Map<String, String> getData2Train() {
         return getData(configProps.getProp("DATA_TO_TRAIN_DIR"));
     }
@@ -27,7 +27,7 @@ public class DataServiceImpl implements DataService {
     @Override
     public Map<String, String> getData2Predict() {
         return getData(configProps.getProp("DATA_TO_PREDICT_DIR"));
-    }
+    }*/
 
     @Override
     public Map<String, String> getData() {

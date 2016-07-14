@@ -6,6 +6,7 @@ import edu.whu.irlab.mobile.props.ConfigProps;
 import edu.whu.irlab.service.DataService;
 import edu.whu.irlab.service.PredictRecordService;
 import edu.whu.irlab.service.TrainRecordService;
+import edu.whu.irlab.thread.PredictThread;
 import edu.whu.irlab.util.MonthFileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,12 @@ public class PredictController {
     @ResponseBody
     public Map<String, String> predict(Integer trainRecordId,
                                        String predictMonthData){
+        Map<String, String> map = new HashMap<>();
+        if (predictMonthData == null){
+            map.put("msg", "请选择相应的数据!");
+            return map;
+        }
+
         TrainRecord trainRecord = trainRecordService.findEntity(trainRecordId);
         String model = trainRecord.getModel();
         PredictRecord predictRecord = new PredictRecord();
@@ -75,8 +82,8 @@ public class PredictController {
 
         predictRecordService.save(predictRecord);
         logger.info("Start Predict Thread, model:{},months:{},modelPath:{}", predictRecord.getModel(), predictRecord.getPredictMonthData(), trainRecord.getModelPath());
-        // threadPoolTaskExecutor.execute(new PredictThread(predictRecordService, predictRecord));
-        Map<String, String> map = new HashMap<>();
+        threadPoolTaskExecutor.execute(new PredictThread(predictRecordService, predictRecord));
+
         map.put("msg", "正在预测!");
         return map;
     }
@@ -96,7 +103,7 @@ public class PredictController {
         }
 
         Map<String, String> data = new TreeMap<>();
-        for (Map.Entry<String, String> entry: dataService.getData2Predict().entrySet()){
+        for (Map.Entry<String, String> entry: dataService.getData().entrySet()){
             if (!dealedDatanameSet.contains(entry.getKey())){
                 data.put(entry.getKey(), entry.getValue());
             }

@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public interface DataService {
 
-    Map<String, String> getData2Train();
+    // Map<String, String> getData2Train();
 
-    Map<String, String> getData2Predict();
+    // Map<String, String> getData2Predict();
 
     Map<String, String> getData();
 

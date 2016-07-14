@@ -18,6 +18,17 @@
         });
 
         function searchAjax() {
+            var trainRecordIdRadio=$('input:radio[name="trainRecordId"]:checked').val();
+            var checkMonthDataRadio=$('input:radio[name="checkMonthData"]:checked').val();
+            if (trainRecordIdRadio==null){
+                alert("请选择相应的模型!");
+                return false;
+            }
+            if (checkMonthDataRadio==null){
+                alert("请选择相应的校验数据!");
+                return false;
+            }
+
             $("#searchForm").ajaxSubmit({
                 success:function (data) {
                     $("tbody").html("");

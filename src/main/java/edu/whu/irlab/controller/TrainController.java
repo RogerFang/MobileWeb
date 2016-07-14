@@ -43,10 +43,7 @@ public class TrainController {
     private ConfigProps configProps;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String train(Model model){
-        // Map<String, String> data2TrainPath = dataService.getData2Train();
-        //
-        // model.addAttribute("data2TrainPath", data2TrainPath);
+    public String train(){
         return "train";
     }
 
@@ -54,10 +51,15 @@ public class TrainController {
     @ResponseBody
     public Map<String, String> train(String model,
                                      String[] months){
+        Map<String, String> map = new HashMap<>();
+        if (months == null){
+            map.put("msg", "请选择相应的数据!");
+            return map;
+        }
+
         TrainRecord trainRecord = new TrainRecord();
         trainRecord.setModel(model);
         trainRecord.setTrainMonthData(Joiner.on(",").skipNulls().join(months));
-        Map<String, String> map = new HashMap<>();
 
         if (model.equals(configProps.getProp("MODEL_RNN"))){
             int rnnsize = Integer.parseInt(configProps.getProp("numSteps")) + 1;
@@ -87,7 +89,7 @@ public class TrainController {
         String modelPath = configProps.getProp("MODEL_SAVE_DIR") + File.separator + trainRecord.getModel() + "_" + trainRecord.getId() + ".model";
         trainRecord.setModelPath(modelPath);
         logger.info("Start Train Thread, model:{},months:{},modelPath:{}", trainRecord.getModel(), trainRecord.getTrainMonthData(), trainRecord.getModelPath());
-        // threadPoolTaskExecutor.execute(new TrainThread(trainRecordService, trainRecord));
+        threadPoolTaskExecutor.execute(new TrainThread(trainRecordService, trainRecord));
 
         return map;
     }
@@ -111,7 +113,7 @@ public class TrainController {
         }
 
         Map<String, String> data = new TreeMap<>();
-        for (Map.Entry<String, String> entry: dataService.getData2Train().entrySet()){
+        for (Map.Entry<String, String> entry: dataService.getData().entrySet()){
             if (!dealedDatanameSet.contains(entry.getKey())){
                 data.put(entry.getKey(), entry.getValue());
             }
